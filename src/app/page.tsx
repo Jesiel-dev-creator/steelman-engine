@@ -1,65 +1,152 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+
+type SteelmanResult = {
+  steelman: string;
+  counterSteelman: string;
+  kernel: string;
+};
 
 export default function Home() {
+  const [argument, setArgument] = useState("");
+  const [result, setResult] = useState<SteelmanResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSteelman() {
+    if (!argument.trim()) {
+      setError("Please enter an argument to steelman.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setResult(null);
+
+    try {
+      const res = await fetch("/api/steelman", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ argument: argument.trim() }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      setResult(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to steelman");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+      <div className="mx-auto max-w-4xl px-6 py-16">
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-50">
+            The Steelman Engine
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-3 text-lg text-zinc-400">
+            Paste any argument or opinion. We&apos;ll steelman it, counter it,
+            and extract the kernel.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        </header>
+
+        <div className="space-y-6">
+          <div>
+            <label
+              htmlFor="argument"
+              className="mb-2 block text-sm font-medium text-zinc-300"
+            >
+              Your argument or opinion
+            </label>
+            <textarea
+              id="argument"
+              value={argument}
+              onChange={(e) => setArgument(e.target.value)}
+              placeholder="Paste or type your argument here..."
+              rows={6}
+              className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-zinc-100 placeholder-zinc-500 focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+              disabled={loading}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+
+          <button
+            onClick={handleSteelman}
+            disabled={loading}
+            className="w-full rounded-xl bg-[#2563EB] px-6 py-4 font-semibold text-white transition-colors hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Documentation
-          </a>
+            {loading ? "Steelmanning..." : "Steelman It"}
+          </button>
+
+          {error && (
+            <div className="rounded-xl border border-red-500/30 bg-red-950/20 px-4 py-3 text-red-400">
+              {error}
+            </div>
+          )}
+
+          {result && (
+            <div className="space-y-6 pt-4">
+              <ResultCard
+                title="The Steelman"
+                content={result.steelman}
+                accent="amber"
+              />
+              <ResultCard
+                title="The Counter-Steelman"
+                content={result.counterSteelman}
+                accent="rose"
+              />
+              <ResultCard
+                title="The Kernel"
+                content={result.kernel}
+                accent="emerald"
+              />
+            </div>
+          )}
         </div>
-      </main>
+      </div>
     </div>
+  );
+}
+
+function ResultCard({
+  title,
+  content,
+  accent,
+}: {
+  title: string;
+  content: string;
+  accent: "amber" | "rose" | "emerald";
+}) {
+  const accentStyles = {
+    amber: "border-amber-500/30 bg-amber-950/10",
+    rose: "border-rose-500/30 bg-rose-950/10",
+    emerald: "border-emerald-500/30 bg-emerald-950/10",
+  };
+
+  const titleStyles = {
+    amber: "text-amber-400",
+    rose: "text-rose-400",
+    emerald: "text-emerald-400",
+  };
+
+  return (
+    <article
+      className={`rounded-xl border ${accentStyles[accent]} p-6 shadow-lg`}
+    >
+      <h2 className={`mb-4 text-lg font-semibold ${titleStyles[accent]}`}>
+        {title}
+      </h2>
+      <div className="prose prose-invert prose-zinc max-w-none text-zinc-300">
+        <div className="whitespace-pre-wrap">{content}</div>
+      </div>
+    </article>
   );
 }
