@@ -58,6 +58,27 @@ export default function Home() {
           </p>
         </header>
 
+        <div className="mb-8 flex justify-center gap-6 text-xs text-zinc-500">
+          <span
+            title="The strongest, most charitable version of the argument. No strawmen."
+            className="cursor-default"
+          >
+            ⚡ Steelman
+          </span>
+          <span
+            title="The strongest possible case against it. The best your opponents could ever make."
+            className="cursor-default"
+          >
+            🔴 Counter-Steelman
+          </span>
+          <span
+            title="The core truth both sides are actually circling. What the real disagreement is about."
+            className="cursor-default"
+          >
+            🟢 Kernel
+          </span>
+        </div>
+
         <div className="space-y-6">
           <div>
             <label

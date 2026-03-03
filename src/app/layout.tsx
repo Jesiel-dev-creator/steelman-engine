@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "The Steelman Engine",
   description: "Steelman any argument. Get the strongest version, counterarguments, and the kernel of truth.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
