@@ -1,16 +1,19 @@
+// TODO: i18n — priority languages: French, Spanish, Portuguese, Arabic. Use next-intl library when implementing.
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas",
+  weight: "400",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${bebasNeue.variable} ${inter.variable} font-sans antialiased`}
       >
         {children}
         <CookieBanner />

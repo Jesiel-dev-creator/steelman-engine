@@ -69,138 +69,265 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <header className="mb-12 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-50">
-            The Steelman Engine
-          </h1>
-          <p className="mt-3 text-lg text-zinc-400">
-            Paste any argument or opinion. We&apos;ll steelman it, counter it,
-            and extract the kernel.
-          </p>
-        </header>
+    <div className="relative z-10 min-h-screen">
+      <div className="mx-auto max-w-[860px] px-6">
+        {/* HERO */}
+        <div className="py-[100px] pb-16 text-center">
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[rgba(37,99,235,0.3)] bg-[rgba(37,99,235,0.1)] px-4 py-1.5">
+            <span className="eyebrow-pulse h-1.5 w-1.5 rounded-full bg-[#60a5fa]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#60a5fa]">
+              Powered by Claude AI
+            </span>
+          </div>
 
-        <div className="mb-8 flex justify-center gap-6 text-xs text-zinc-500">
-          <span
-            title="The strongest, most charitable version of the argument. No strawmen."
-            className="cursor-default"
-          >
-            ⚡ Steelman
-          </span>
-          <span
-            title="The strongest possible case against it. The best your opponents could ever make."
-            className="cursor-default"
-          >
-            🔴 Counter-Steelman
-          </span>
-          <span
-            title="The core truth both sides are actually circling. What the real disagreement is about."
-            className="cursor-default"
-          >
-            🟢 Kernel
-          </span>
+          <h1 className="font-bebas mb-6 text-[clamp(64px,10vw,110px)] leading-[0.9] tracking-[0.02em]">
+            <span
+              className="bg-gradient-to-b from-white to-[#94a3b8] bg-clip-text text-transparent"
+              style={{
+                filter: "drop-shadow(0 0 60px rgba(37,99,235,0.3))",
+              }}
+            >
+              The Steelman
+              <br />
+              Engine
+            </span>
+          </h1>
+
+          <p className="mx-auto mb-12 max-w-[500px] text-lg font-light leading-relaxed text-[var(--muted)]">
+            Most people argue against the weakest version of ideas they disagree
+            with. We fix that.
+          </p>
+
+          {/* CONCEPT BADGES */}
+          <div className="mb-16 flex flex-wrap justify-center gap-8">
+            <ConceptBadge
+              dotColor="#d97706"
+              label="Steelman"
+              tooltip="The strongest possible case FOR the argument"
+            />
+            <ConceptBadge
+              dotColor="#e11d48"
+              label="Counter-Steelman"
+              tooltip="The strongest possible case AGAINST it"
+            />
+            <ConceptBadge
+              dotColor="#059669"
+              label="The Kernel"
+              tooltip="The truth both sides are actually circling"
+            />
+          </div>
         </div>
 
-        <div className="space-y-6">
+        {/* HOW IT WORKS */}
+        <div className="mb-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
+          <div className="bg-[var(--surface)] p-6 text-center">
+            <div className="font-bebas mb-2 text-4xl leading-none text-[rgba(37,99,235,0.3)]">
+              01
+            </div>
+            <div className="text-[13px] leading-relaxed text-[#94a3b8]">
+              Paste any argument, opinion, or hot take
+            </div>
+          </div>
+          <div className="bg-[var(--surface)] p-6 text-center">
+            <div className="font-bebas mb-2 text-4xl leading-none text-[rgba(37,99,235,0.3)]">
+              02
+            </div>
+            <div className="text-[13px] leading-relaxed text-[#94a3b8]">
+              Hit Steelman It and let the engine work
+            </div>
+          </div>
+          <div className="bg-[var(--surface)] p-6 text-center">
+            <div className="font-bebas mb-2 text-4xl leading-none text-[rgba(37,99,235,0.3)]">
+              03
+            </div>
+            <div className="text-[13px] leading-relaxed text-[#94a3b8]">
+              Get three perspectives that will shift how you think
+            </div>
+          </div>
+        </div>
+
+        {/* INPUT */}
+        <div className="mb-8">
+          <label
+            htmlFor="argument"
+            className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]"
+          >
+            Your argument or opinion
+          </label>
           <div>
-            <label
-              htmlFor="argument"
-              className="mb-2 block text-sm font-medium text-zinc-300"
-            >
-              Your argument or opinion
-            </label>
             <textarea
               id="argument"
               value={argument}
               onChange={(e) => setArgument(e.target.value)}
-              placeholder="Paste or type your argument here..."
+              placeholder="Example: Social media is making society more divided... or paste any argument, opinion, or hot take you want to pressure-test."
               rows={6}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-zinc-100 placeholder-zinc-500 focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+              className="h-40 w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-6 py-5 text-[15px] leading-relaxed text-[var(--text)] placeholder:text-[#334155] outline-none transition-[border-color,box-shadow] duration-200 focus:border-[var(--blue)] focus:shadow-[0_0_0_3px_var(--blue-glow),inset_0_0_40px_rgba(37,99,235,0.03)]"
               disabled={loading}
             />
+            <p className="mt-1.5 text-right text-[11px] text-[var(--muted)]">
+              {argument.length} characters
+            </p>
           </div>
+        </div>
 
-          <button
-            onClick={handleSteelman}
-            disabled={loading}
-            className="w-full rounded-xl bg-[#2563EB] px-6 py-4 font-semibold text-white transition-colors hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? "Steelmanning..." : "Steelman It"}
-          </button>
+        {/* BUTTON */}
+        <button
+          onClick={handleSteelman}
+          disabled={loading}
+          className="btn-pulse relative w-full overflow-hidden rounded-xl bg-[var(--blue)] py-[18px] text-[15px] font-semibold tracking-[0.05em] text-white transition-transform duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:animate-none disabled:opacity-60 disabled:hover:translate-y-0"
+        >
+          <span className="relative z-10">
+            {loading ? "Steelmanning..." : "⚡ Steelman It"}
+          </span>
+          <span
+            className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"
+            aria-hidden
+          />
+        </button>
 
-          {error && (
-            <div className="rounded-xl border border-red-500/30 bg-red-950/20 px-4 py-3 text-red-400">
-              {error}
+        {error && (
+          <div className="mt-6 rounded-xl border border-red-500/30 bg-red-950/20 px-4 py-3 text-red-400">
+            {error}
+          </div>
+        )}
+
+        {/* RESULTS */}
+        {result && (
+          <>
+            <div className="my-14 flex items-center gap-4">
+              <div className="h-px flex-1 bg-[var(--border)]" />
+              <span className="text-[11px] uppercase tracking-[0.15em] text-[#64748b]">
+                Results
+              </span>
+              <div className="h-px flex-1 bg-[var(--border)]" />
             </div>
-          )}
 
-          {result && (
-            <div className="space-y-6 pt-4">
+            <div className="flex flex-col gap-5">
               <ResultCard
+                type="steelman"
+                icon="⚡"
                 title="The Steelman"
                 content={result.steelman}
-                accent="amber"
               />
               <ResultCard
+                type="counter"
+                icon="🔴"
                 title="The Counter-Steelman"
                 content={result.counterSteelman}
-                accent="rose"
               />
               <ResultCard
+                type="kernel"
+                icon="🟢"
                 title="The Kernel"
                 content={result.kernel}
-                accent="emerald"
               />
-              <div className="flex items-center justify-center gap-2 pt-2">
+
+              <div className="flex items-center justify-center gap-2 pt-4">
                 <button
                   onClick={handleShare}
-                  className="text-xs text-zinc-500 hover:text-zinc-400 transition-colors"
+                  className="text-xs text-[#64748b] transition-colors hover:text-[var(--text)]"
                 >
                   Share Results
                 </button>
                 {copied && (
-                  <span className="text-xs text-zinc-500">Copied!</span>
+                  <span className="text-xs text-[#64748b]">Copied!</span>
                 )}
               </div>
             </div>
-          )}
-        </div>
+          </>
+        )}
+      </div>
+
+      {/* FOOTER */}
+      <footer className="py-16 pb-10 text-center text-xs tracking-[0.05em] text-[#1e293b]">
+        Built by Batman & Robin · March 2026
+      </footer>
+    </div>
+  );
+}
+
+function ConceptBadge({
+  dotColor,
+  label,
+  tooltip,
+}: {
+  dotColor: string;
+  label: string;
+  tooltip: string;
+}) {
+  return (
+    <div className="group relative flex cursor-default items-center gap-2">
+      <div
+        className="h-2 w-2 rounded-full"
+        style={{ backgroundColor: dotColor }}
+      />
+      <span className="text-xs font-medium uppercase tracking-[0.08em] text-[var(--muted)] group-hover:text-[var(--text)]">
+        {label}
+      </span>
+      <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-xs font-normal text-[var(--text)] opacity-0 transition-opacity group-hover:opacity-100">
+        {tooltip}
       </div>
     </div>
   );
 }
 
 function ResultCard({
+  type,
+  icon,
   title,
   content,
-  accent,
 }: {
+  type: "steelman" | "counter" | "kernel";
+  icon: string;
   title: string;
   content: string;
-  accent: "amber" | "rose" | "emerald";
 }) {
-  const accentStyles = {
-    amber: "border-amber-500/30 bg-amber-950/10",
-    rose: "border-rose-500/30 bg-rose-950/10",
-    emerald: "border-emerald-500/30 bg-emerald-950/10",
+  const styles = {
+    steelman: {
+      titleColor: "var(--amber)",
+      iconBg: "rgba(217,119,6,0.15)",
+    },
+    counter: {
+      titleColor: "var(--rose)",
+      iconBg: "rgba(225,29,72,0.15)",
+    },
+    kernel: {
+      titleColor: "var(--emerald)",
+      iconBg: "rgba(5,150,105,0.15)",
+    },
   };
 
-  const titleStyles = {
-    amber: "text-amber-400",
-    rose: "text-rose-400",
-    emerald: "text-emerald-400",
-  };
+  const s = styles[type];
 
   return (
-    <article
-      className={`rounded-xl border ${accentStyles[accent]} p-6 shadow-lg`}
-    >
-      <h2 className={`mb-4 text-lg font-semibold ${titleStyles[accent]}`}>
-        {title}
-      </h2>
-      <div className="prose prose-invert prose-zinc max-w-none text-zinc-300">
-        <div className="whitespace-pre-wrap">{content}</div>
+    <article className="relative overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--surface)] p-8">
+      <div
+        className="absolute left-0 right-0 top-0 h-0.5"
+        style={{
+          background:
+            type === "steelman"
+              ? "linear-gradient(90deg, var(--amber), transparent)"
+              : type === "counter"
+                ? "linear-gradient(90deg, var(--rose), transparent)"
+                : "linear-gradient(90deg, var(--emerald), transparent)",
+        }}
+      />
+      <div className="mb-4 flex items-center gap-2.5">
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-sm"
+          style={{ backgroundColor: s.iconBg }}
+        >
+          {icon}
+        </div>
+        <div
+          className="text-[13px] font-bold uppercase tracking-[0.08em]"
+          style={{ color: s.titleColor }}
+        >
+          {title}
+        </div>
+      </div>
+      <div className="whitespace-pre-wrap text-[15px] leading-[1.75] text-[#94a3b8]">
+        {content}
       </div>
     </article>
   );
