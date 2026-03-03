@@ -13,6 +13,29 @@ export default function Home() {
   const [result, setResult] = useState<SteelmanResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  async function handleShare() {
+    if (!result) return;
+    const text = [
+      "Original argument:",
+      argument.trim(),
+      "",
+      "The Steelman:",
+      result.steelman,
+      "",
+      "The Counter-Steelman:",
+      result.counterSteelman,
+      "",
+      "The Kernel:",
+      result.kernel,
+      "",
+      "— The Steelman Engine",
+    ].join("\n");
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   async function handleSteelman() {
     if (!argument.trim()) {
@@ -129,6 +152,17 @@ export default function Home() {
                 content={result.kernel}
                 accent="emerald"
               />
+              <div className="flex items-center justify-center gap-2 pt-2">
+                <button
+                  onClick={handleShare}
+                  className="text-xs text-zinc-500 hover:text-zinc-400 transition-colors"
+                >
+                  Share Results
+                </button>
+                {copied && (
+                  <span className="text-xs text-zinc-500">Copied!</span>
+                )}
+              </div>
             </div>
           )}
         </div>
