@@ -65,7 +65,7 @@ Respond with only the three sections above. Use markdown formatting for readabil
       textContent && "text" in textContent ? textContent.text : "";
 
     // Check for refusal
-    const refusalMatch = rawText.match(/^REFUSAL:\s*(.+)/s);
+    const refusalMatch = rawText.match(/^REFUSAL:\s*([\s\S]+)/);
     if (refusalMatch) {
       return NextResponse.json(
         { error: refusalMatch[1].trim() },
