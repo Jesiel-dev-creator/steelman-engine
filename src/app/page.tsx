@@ -70,17 +70,17 @@ export default function Home() {
 
   return (
     <div className="relative z-10 min-h-screen">
-      <div className="mx-auto max-w-[860px] px-6">
+      <div className="mx-auto max-w-[860px] px-4 sm:px-6">
         {/* HERO */}
-        <div className="py-[100px] pb-16 text-center">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[rgba(37,99,235,0.3)] bg-[rgba(37,99,235,0.1)] px-4 py-1.5">
+        <div className="py-12 pb-10 text-center sm:py-[100px] sm:pb-16">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[rgba(37,99,235,0.3)] bg-[rgba(37,99,235,0.1)] px-3 py-1.5 sm:mb-8 sm:px-4">
             <span className="eyebrow-pulse h-1.5 w-1.5 rounded-full bg-[#60a5fa]" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#60a5fa]">
               Powered by Claude AI
             </span>
           </div>
 
-          <h1 className="font-bebas mb-6 text-[clamp(64px,10vw,110px)] leading-[0.9] tracking-[0.02em]">
+          <h1 className="font-bebas mb-4 text-[clamp(48px,14vw,110px)] leading-[0.9] tracking-[0.02em] sm:mb-6 sm:text-[clamp(64px,10vw,110px)]">
             <span
               className="bg-gradient-to-b from-white to-[#94a3b8] bg-clip-text text-transparent"
               style={{
@@ -93,13 +93,13 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="mx-auto mb-12 max-w-[500px] text-lg font-light leading-relaxed text-[var(--muted)]">
+          <p className="mx-auto mb-8 max-w-[500px] px-2 text-base font-light leading-relaxed text-[var(--muted)] sm:mb-12 sm:text-lg">
             Most people argue against the weakest version of ideas they disagree
             with. We fix that.
           </p>
 
           {/* CONCEPT BADGES */}
-          <div className="mb-16 flex flex-wrap justify-center gap-8">
+          <div className="mb-10 flex flex-wrap justify-center gap-4 sm:mb-16 sm:gap-8">
             <ConceptBadge
               dotColor="#d97706"
               label="Steelman"
@@ -119,8 +119,8 @@ export default function Home() {
         </div>
 
         {/* HOW IT WORKS */}
-        <div className="mb-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
-          <div className="bg-[var(--surface)] p-6 text-center">
+        <div className="mb-8 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--border)] sm:mb-12 sm:rounded-2xl sm:grid-cols-3">
+          <div className="bg-[var(--surface)] p-4 text-center sm:p-6">
             <div className="font-bebas mb-2 text-4xl leading-none text-[rgba(37,99,235,0.3)]">
               01
             </div>
@@ -128,7 +128,7 @@ export default function Home() {
               Paste any argument, opinion, or hot take
             </div>
           </div>
-          <div className="bg-[var(--surface)] p-6 text-center">
+          <div className="bg-[var(--surface)] p-4 text-center sm:p-6">
             <div className="font-bebas mb-2 text-4xl leading-none text-[rgba(37,99,235,0.3)]">
               02
             </div>
@@ -136,7 +136,7 @@ export default function Home() {
               Hit Steelman It and let the engine work
             </div>
           </div>
-          <div className="bg-[var(--surface)] p-6 text-center">
+          <div className="bg-[var(--surface)] p-4 text-center sm:p-6">
             <div className="font-bebas mb-2 text-4xl leading-none text-[rgba(37,99,235,0.3)]">
               03
             </div>
@@ -147,7 +147,7 @@ export default function Home() {
         </div>
 
         {/* INPUT */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <label
             htmlFor="argument"
             className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]"
@@ -161,7 +161,7 @@ export default function Home() {
               onChange={(e) => setArgument(e.target.value)}
               placeholder="Example: Social media is making society more divided... or paste any argument, opinion, or hot take you want to pressure-test."
               rows={6}
-              className="h-40 w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-6 py-5 text-[15px] leading-relaxed text-[var(--text)] placeholder:text-[#334155] outline-none transition-[border-color,box-shadow] duration-200 focus:border-[var(--blue)] focus:shadow-[0_0_0_3px_var(--blue-glow),inset_0_0_40px_rgba(37,99,235,0.03)]"
+              className="min-h-[140px] w-full resize-none rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-4 text-[16px] leading-relaxed text-[var(--text)] placeholder:text-[#334155] outline-none transition-[border-color,box-shadow] duration-200 focus:border-[var(--blue)] focus:shadow-[0_0_0_3px_var(--blue-glow),inset_0_0_40px_rgba(37,99,235,0.03)] sm:min-h-[160px] sm:rounded-2xl sm:px-6 sm:py-5 sm:text-[15px]"
               disabled={loading}
             />
             <p className="mt-1.5 text-right text-[11px] text-[var(--muted)]">
@@ -174,7 +174,7 @@ export default function Home() {
         <button
           onClick={handleSteelman}
           disabled={loading}
-          className="btn-pulse relative w-full overflow-hidden rounded-xl bg-[var(--blue)] py-[18px] text-[15px] font-semibold tracking-[0.05em] text-white transition-transform duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:animate-none disabled:opacity-60 disabled:hover:translate-y-0"
+          className="btn-pulse relative w-full overflow-hidden rounded-xl bg-[var(--blue)] py-4 text-[15px] font-semibold tracking-[0.05em] text-white transition-transform duration-150 hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:animate-none disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-[52px] sm:py-[18px]"
         >
           <span className="relative z-10">
             {loading ? "Steelmanning..." : "⚡ Steelman It"}
@@ -194,7 +194,7 @@ export default function Home() {
         {/* RESULTS */}
         {result && (
           <>
-            <div className="my-14 flex items-center gap-4">
+            <div className="my-10 flex items-center gap-4 sm:my-14">
               <div className="h-px flex-1 bg-[var(--border)]" />
               <span className="text-[11px] uppercase tracking-[0.15em] text-[#64748b]">
                 Results
@@ -202,7 +202,7 @@ export default function Home() {
               <div className="h-px flex-1 bg-[var(--border)]" />
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4 sm:gap-5">
               <ResultCard
                 type="steelman"
                 icon="⚡"
@@ -225,7 +225,7 @@ export default function Home() {
               <div className="flex items-center justify-center gap-2 pt-4">
                 <button
                   onClick={handleShare}
-                  className="text-xs text-[#64748b] transition-colors hover:text-[var(--text)]"
+                  className="min-h-[44px] min-w-[44px] px-3 text-xs text-[#64748b] transition-colors hover:text-[var(--text)]"
                 >
                   Share Results
                 </button>
@@ -239,7 +239,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER */}
-      <footer className="py-16 pb-10 text-center text-xs tracking-[0.05em] text-[#1e293b]">
+      <footer className="py-12 pb-8 text-center text-xs tracking-[0.05em] text-[#1e293b] sm:py-16 sm:pb-10">
         Built by Batman & Robin · March 2026
       </footer>
     </div>
@@ -256,15 +256,18 @@ function ConceptBadge({
   tooltip: string;
 }) {
   return (
-    <div className="group relative flex cursor-default items-center gap-2">
+    <div
+      className="group relative flex cursor-default items-center gap-2"
+      title={tooltip}
+    >
       <div
-        className="h-2 w-2 rounded-full"
+        className="h-2 w-2 shrink-0 rounded-full"
         style={{ backgroundColor: dotColor }}
       />
       <span className="text-xs font-medium uppercase tracking-[0.08em] text-[var(--muted)] group-hover:text-[var(--text)]">
         {label}
       </span>
-      <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-xs font-normal text-[var(--text)] opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-3 hidden -translate-x-1/2 whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-xs font-normal text-[var(--text)] opacity-0 transition-opacity group-hover:block group-hover:opacity-100">
         {tooltip}
       </div>
     </div>
@@ -300,7 +303,7 @@ function ResultCard({
   const s = styles[type];
 
   return (
-    <article className="relative overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--surface)] p-8">
+    <article className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:rounded-[20px] sm:p-8">
       <div
         className="absolute left-0 right-0 top-0 h-0.5"
         style={{
@@ -326,7 +329,7 @@ function ResultCard({
           {title}
         </div>
       </div>
-      <div className="whitespace-pre-wrap text-[15px] leading-[1.75] text-[#94a3b8]">
+      <div className="whitespace-pre-wrap text-[15px] leading-[1.75] text-[#94a3b8] [word-break:break-word]">
         {content}
       </div>
     </article>
